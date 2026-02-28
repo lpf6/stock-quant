@@ -1,0 +1,139 @@
+# Stock Quant 默认配置
+
+# 数据源配置
+data:
+  source: "akshare"  # 数据源：akshare, tushare, baostock
+  max_retries: 3     # 最大重试次数
+  timeout: 30        # 超时时间（秒）
+  cache_enabled: true  # 启用缓存
+  cache_dir: "data/cache"  # 缓存目录
+
+# 插件配置
+plugins:
+  dirs:  # 插件目录列表
+    - "plugins/custom"
+  auto_discover: true  # 自动发现插件
+  auto_load: true     # 自动加载默认插件
+
+# 策略配置
+strategies:
+  default_strategies:  # 默认策略列表
+    - "MACrossStrategy"
+    - "RSIStrategy"
+    - "MACDStrategy"
+  strategy_weights:    # 策略权重
+    MACrossStrategy: 0.3
+    RSIStrategy: 0.25
+    MACDStrategy: 0.25
+  signal_threshold: 0.5  # 信号阈值
+
+# 指标配置
+indicators:
+  default_indicators:  # 默认指标列表
+    - "MovingAverageIndicator"
+    - "RSIIndicator"
+    - "BollingerBandsIndicator"
+  ma_periods: [5, 10, 20, 60]  # 移动平均线周期
+  rsi_period: 14               # RSI周期
+  bb_period: 20                # 布林带周期
+  bb_std: 2                    # 布林带标准差倍数
+
+# 周期配置
+period:
+  default: "1y"  # 默认分析周期
+  supported_periods:  # 支持的周期
+    - name: "1m"
+      months: 1
+      description: "1个月"
+      recommended: true
+    - name: "3m"
+      months: 3
+      description: "3个月"
+      recommended: true
+    - name: "6m"
+      months: 6
+      description: "6个月"
+      recommended: true
+    - name: "1y"
+      months: 12
+      description: "1年"
+      recommended: true
+    - name: "2y"
+      months: 24
+      description: "2年"
+    - name: "3y"
+      months: 36
+      description: "3年"
+      recommended: true
+    - name: "5y"
+      months: 60
+      description: "5年"
+
+# 时间框架配置
+timeframe:
+  default: "daily"  # 默认时间框架：daily, weekly, monthly
+  convert_on_fly: true  # 实时转换时间框架
+  align_data: true      # 自动对齐数据
+
+# 输出配置
+output:
+  format: "csv"  # 输出格式：csv, json, html, markdown
+  encoding: "utf-8"
+  include_header: true
+  precision: 4  # 数值精度
+  
+  # CSV特定配置
+  csv:
+    delimiter: ","
+    quote_char: '"'
+    
+  # JSON特定配置
+  json:
+    indent: 2
+    sort_keys: true
+    
+  # HTML特定配置
+  html:
+    template: "default"
+    css_style: "minimal"
+    
+  # Markdown特定配置
+  markdown:
+    table_format: "github"  # github, grid, simple
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  file_enabled: true
+  file_path: "logs/stock_quant.log"
+  max_file_size: 10485760  # 10MB
+  backup_count: 5
+
+# 性能配置
+performance:
+  batch_size: 50  # 批量处理大小
+  max_workers: 4  # 最大工作线程数
+  use_cache: true
+  cache_ttl: 3600  # 缓存存活时间（秒）
+
+# 分析配置
+analysis:
+  min_data_points: 60  # 最小数据点数
+  trend_confirmation: true  # 趋势确认
+  volume_confirmation: true  # 成交量确认
+  score_calculation: "weighted"  # 加权评分
+
+# 股票池配置
+stock_pool:
+  default_index: "000852"  # 中证1000
+  max_stocks: 1000  # 最大股票数量
+  filter_enabled: true  # 启用过滤
+  filter_rules:  # 过滤规则
+    - field: "volume"
+      operator: ">"
+      value: 1000000  # 成交量大于100万股
+    - field: "price"
+      operator: ">"
+      value: 1.0  # 股价大于1元

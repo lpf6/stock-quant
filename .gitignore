@@ -1,0 +1,113 @@
+# Python通用忽略
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Python虚拟环境
+venv/
+env/
+ENV/
+.env/
+.venv/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 数据文件（股票量化项目特定）
+*.csv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# 回测结果目录
+backtest_results/
+backtest_simplified_results/
+full_optimization_results/
+optimization_results/
+test_results/
+
+# 临时文件和缓存
+.cache/
+.coverage
+.coverage.*
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter笔记本
+.ipynb_checkpoints/
+
+# 密钥和敏感信息
+secrets.json
+config.json
+*.key
+*.pem
+*.crt
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 打包和部署
+.cpython-*
+*.manifest
+*.spec
+
+# 单元测试
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# 项目特定（根据你的项目结构调整）
+memory/      # OpenClaw记忆文件
+.clawhub/    # ClawHub缓存
+skills/      # OpenClaw技能目录
+
+# 但保留这些配置文件
+!pyproject.toml
+!README.md
+!.gitignore
