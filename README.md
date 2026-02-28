@@ -1,248 +1,176 @@
-# Stock Quant - 技术面量化选股系统
+# Stock Quant - 股票量化分析平台 🚀
 
-一个插件化、多周期、配置化的量化选股系统，支持批量处理和技术分析。
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/lpf6/stock-quant)
+![GitHub repo size](https://img.shields.io/github/repo-size/lpf6/stock-quant)
 
-## 特性
+一个专业的股票量化分析平台，支持数据获取、技术指标计算、策略回测和参数优化。
 
-- **插件化架构**: 支持策略插件和指标插件，可动态加载/卸载
-- **多周期回溯**: 支持日线、周线、月线不同时间框架，数据自动对齐
-- **配置管理**: YAML配置文件，环境变量支持，运行时热更新
-- **批量处理**: 支持上千只股票批量处理，高效内存管理
-- **多种输出**: 支持JSON/CSV/HTML/Markdown多种输出格式
-- **测试驱动**: 完整的单元测试、集成测试和性能测试套件
-- **纯Python实现**: 无外部依赖，跨平台兼容
+## ✨ 核心特性
 
-## 安装
+- 📊 **多数据源支持**：CSV、API、数据库等多种数据源
+- 📈 **完整技术指标**：MA、MACD、RSI、布林带等常用指标
+- 🎯 **策略回测框架**：完整的回测系统，支持多种策略
+- ⚙️ **参数优化系统**：自动参数优化和超参数调优
+- 🛡️ **风险管理模块**：风险控制和资金管理
+- 📊 **可视化报表**：自动生成回测报告和图表
 
-### 从源码安装
+## 🚀 快速开始
 
+### 1. 克隆仓库
 ```bash
-# 克隆仓库
- git clone https://github.com/yourusername/stock-quant.git
+git clone https://github.com/lpf6/stock-quant.git
 cd stock-quant
+```
 
-# 创建虚拟环境
+### 2. 创建虚拟环境
+```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# 或 venv\Scripts\activate  # Windows
+# venv\Scripts\activate   # Windows
+```
 
-# 安装依赖
+### 3. 安装依赖
+```bash
 pip install -e .
 ```
 
-### 依赖
-
-- Python >= 3.8
-- pandas >= 1.5.0
-- numpy >= 1.21.0
-- akshare >= 1.10.0 (数据源)
-- pyyaml >= 6.0
-
-## 快速开始
-
-### 1. 分析单只股票
-
+### 4. 运行示例
 ```bash
-# 分析单只股票
-stock-quant analyze --symbol 000001 --period 1y --format json
-
-# 指定策略和指标
-stock-quant analyze --symbol 000001 --strategies MACrossStrategy RSIStrategy --indicators MovingAverageIndicator
+python examples/basic_usage.py
 ```
 
-### 2. 批量分析
-
-```bash
-# 分析中证1000成分股
-stock-quant batch --index 000852 --period 6m --output results.csv
-
-# 分析指定股票列表
-stock-quant batch --symbols 000001 000002 000333 --output results.json --format json
-```
-
-### 3. 插件管理
-
-```bash
-# 列出所有插件
-stock-quant plugins list
-
-# 查看插件信息
-stock-quant plugins info MACrossStrategy
-
-# 加载插件
-stock-quant plugins load MyCustomStrategy
-```
-
-### 4. 配置管理
-
-```bash
-# 显示配置
-stock-quant config show
-
-# 设置配置项
-stock-quant config set data.source "tushare"
-
-# 验证配置
-stock-quant config validate
-```
-
-## 项目结构
+## 📁 项目结构
 
 ```
 stock-quant/
-├── src/stock_quant/          # 源代码
-│   ├── core/                # 核心模块
-│   ├── plugins/             # 插件系统
-│   ├── period/              # 多周期系统
-│   ├── config/              # 配置管理
-│   ├── utils/               # 工具函数
-│   └── cli/                 # 命令行接口
-├── config/                  # 配置文件
-├── tests/                   # 测试套件
-├── examples/                # 示例代码
-├── docs/                    # 文档
-└── scripts/                 # 辅助脚本
+├── src/                    # 源代码
+│   └── stock_quant/       # 主包
+│       ├── core/         # 核心模块（数据获取、处理、计算）
+│       ├── plugins/      # 插件系统（策略、指标插件）
+│       ├── period/       # 多周期系统
+│       ├── config/       # 配置管理
+│       └── cli/          # 命令行接口
+├── tests/                 # 测试套件
+├── config/               # 配置文件
+├── examples/             # 使用示例
+├── docs/                 # 文档
+└── scripts/              # 辅助脚本
 ```
 
-## 插件开发
+## 🔧 主要模块
 
-### 策略插件示例
+### 核心分析脚本
+- `quant_analysis.py` - 基础量化分析
+- `quant_analysis_v2.py` - 增强版量化分析
+- `backtest_analysis.py` - 回测分析系统
+- `full_optimization_pipeline.py` - 完整优化流程
 
-```python
-# plugins/custom/my_strategy.py
-from stock_quant.plugins.base import StrategyPlugin
-import pandas as pd
+### 优化模块
+- `param_optimizer.py` - 参数优化器
+- `optimization_backtest.py` - 优化回测
+- `stage2_optimization_simple.py` - 第二阶段优化
 
-class MyCustomStrategy(StrategyPlugin):
-    def __init__(self):
-        super().__init__()
-        self.name = "My Custom Strategy"
-        self.description = "自定义策略示例"
-        self.author = "Your Name"
-        self.config = {
-            "param1": 10,
-            "param2": 20
-        }
+### 工具脚本
+- `run_optimization.sh` - 优化运行脚本
+- `check_optimization_results.py` - 结果检查
+
+## 📊 数据分析功能
+
+### 技术指标计算
+- 移动平均线（MA）
+- 相对强弱指数（RSI）
+- 异同移动平均线（MACD）
+- 布林带（Bollinger Bands）
+- 动量指标
+
+### 策略回测
+- MA交叉策略
+- RSI超买超卖策略
+- MACD金叉死叉策略
+- 复合策略组合
+
+## ⚙️ 配置系统
+
+项目使用YAML配置文件，支持环境变量覆盖：
+
+```yaml
+# config/default.yaml
+data:
+  source: "akshare"  # 或 "csv", "database"
+  cache_enabled: true
+  
+strategy:
+  default: "ma_cross"
+  parameters:
+    ma_fast: 5
+    ma_slow: 20
     
-    def calculate_signals(self, df: pd.DataFrame) -> dict:
-        """计算交易信号"""
-        # 你的策略逻辑
-        return {"my_signal": 1, "score": 0.5}
-    
-    def get_signal_descriptions(self) -> dict:
-        return {
-            "my_signal": "自定义信号",
-            "score": "策略评分"
-        }
+output:
+  format: "csv"  # 或 "json", "html", "markdown"
+  directory: "./results"
 ```
 
-### 指标插件示例
-
-```python
-# plugins/custom/my_indicator.py
-from stock_quant.plugins.base import IndicatorPlugin
-import pandas as pd
-
-class MyCustomIndicator(IndicatorPlugin):
-    def __init__(self):
-        super().__init__()
-        self.name = "My Custom Indicator"
-        self.description = "自定义指标示例"
-        self.author = "Your Name"
-        self.config = {"period": 14}
-    
-    def calculate(self, df: pd.DataFrame) -> pd.DataFrame:
-        """计算指标"""
-        result_df = df.copy()
-        # 你的指标计算逻辑
-        result_df["MY_INDICATOR"] = df["close"].rolling(self.config["period"]).mean()
-        return result_df
-    
-    def get_indicator_names(self) -> list:
-        return ["MY_INDICATOR"]
-```
-
-## 配置系统
-
-配置文件按优先级加载：
-1. 环境变量（STOCK_QUANT_*）
-2. local.yaml（用户本地配置）
-3. {environment}.yaml（环境配置）
-4. default.yaml（默认配置）
-
-### 环境变量示例
-
-```bash
-export STOCK_QUANT_DATA_SOURCE="akshare"
-export STOCK_QUANT_LOGGING_LEVEL="DEBUG"
-export STOCK_QUANT_OUTPUT_FORMAT="json"
-```
-
-## 测试
+## 🧪 测试
 
 ```bash
 # 运行所有测试
 pytest
 
-# 运行单元测试
-pytest tests/unit/
-
-# 运行集成测试
-pytest tests/integration/
-
-# 运行性能测试
-pytest tests/performance/
+# 运行特定测试
+pytest tests/unit/test_data_fetcher.py
+pytest tests/integration/ -v
 
 # 生成测试覆盖率报告
 pytest --cov=stock_quant --cov-report=html
 ```
 
-## 性能优化
+## 📈 输出示例
 
-- 批量处理支持异步数据获取
-- 数据缓存减少重复请求
-- 内存高效的数据处理
-- 多线程支持（可选）
+### CSV输出
+```csv
+symbol,date,signal,score,indicators
+000001,2024-01-15,BUY,0.85,{"ma": 12.5, "rsi": 65.2}
+000002,2024-01-15,SELL,0.72,{"ma": 8.3, "rsi": 75.8}
+```
 
-## 输出格式
+### JSON输出
+```json
+[
+  {
+    "symbol": "000001",
+    "date": "2024-01-15",
+    "signal": "BUY",
+    "score": 0.85,
+    "indicators": {"ma": 12.5, "rsi": 65.2}
+  }
+]
+```
 
-系统支持四种输出格式：
+## 🔄 版本控制说明
 
-1. **CSV**: 适合Excel导入和数据分析
-2. **JSON**: 适合程序处理和API接口
-3. **HTML**: 适合网页展示和报告
-4. **Markdown**: 适合文档和README
+项目使用合理的`.gitignore`配置：
+- ✅ **版本控制**：所有源代码、配置、文档
+- ❌ **忽略**：数据文件、回测结果、缓存文件、虚拟环境
 
-## 从 quant_analysis_v2.py 迁移
+## 🤝 贡献指南
 
-原 `quant_analysis_v2.py` 的功能已重构为模块化系统：
-
-- 数据获取 → `DataFetcher`
-- 指标计算 → `IndicatorCalculator` + 指标插件
-- 信号生成 → `SignalGenerator` + 策略插件
-- 结果输出 → `OutputFormatter`
-- 添加了配置管理、日志系统、异常处理等基础设施
-
-## 贡献
-
-1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+1. Fork 本仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
+5. 开启Pull Request
 
-## 许可证
+## 📄 许可证
 
 本项目基于 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 联系方式
+## 📞 联系
 
-- 项目地址: [https://github.com/yourusername/stock-quant](https://github.com/yourusername/stock-quant)
-- 问题反馈: [GitHub Issues](https://github.com/yourusername/stock-quant/issues)
+- 项目地址：https://github.com/lpf6/stock-quant
+- 问题反馈：GitHub Issues
 
-## 致谢
+---
 
-感谢以下开源项目：
-- [AKShare](https://github.com/akfamily/akshare) - 免费开源财经数据接口库
-- [pandas](https://pandas.pydata.org/) - 强大的数据分析工具
-- [numpy](https://numpy.org/) - 科学计算基础库
+**⭐ 如果这个项目对你有帮助，请给个Star！** ⭐
