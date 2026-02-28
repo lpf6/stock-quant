@@ -107,6 +107,15 @@ memory/      # OpenClaw记忆文件
 .clawhub/    # ClawHub缓存
 skills/      # OpenClaw技能目录
 
+# OpenClaw配置文件
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+
 # 但保留这些配置文件
 !pyproject.toml
 !README.md
